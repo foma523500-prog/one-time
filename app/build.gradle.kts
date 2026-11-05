@@ -1,9 +1,12 @@
-    signingConfigs {
-        // 用项目内的调试签名，避免依赖 ~/.android 下的默认 keystore
-        getByName("debug") {
-            storeFile = rootProject.file(".android/debug.keystore")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
-        }
+    defaultConfig {
+        applicationId = "com.onetime.app"
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
     }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            ...  
