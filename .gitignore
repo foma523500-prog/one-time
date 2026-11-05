@@ -1,0 +1,14 @@
+.gradle/
+build/
+app/build/
+local.properties
+.toolchain/
+.android/
+.avd/
+.androidsdk/
+design/
+screenshots/
+dist/
+*.apk
+.DS_Store
+.idea/
