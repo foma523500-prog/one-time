@@ -28,7 +28,7 @@ jobs:
           free -h
           grep -E '^(org.gradle.jvmargs|kotlin.daemon.jvmargs|org.gradle.workers.max|org.gradle.parallel)=' gradle.properties || true
 
-           - name: Build debug APK
+      - name: Build debug APK
         run: |
           chmod +x gradlew
           ./gradlew :app:assembleDebug \
