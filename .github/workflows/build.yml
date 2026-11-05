@@ -28,7 +28,7 @@ jobs:
           free -h
           grep -E '^(org.gradle.jvmargs|kotlin.daemon.jvmargs|org.gradle.workers.max|org.gradle.parallel)=' gradle.properties || true
 
-      - name: Build debug APK
+           - name: Build debug APK
         run: |
           chmod +x gradlew
           ./gradlew :app:assembleDebug \
@@ -36,7 +36,7 @@ jobs:
             --max-workers=1 \
             --no-parallel \
             -Dorg.gradle.jvmargs="-Xmx2g -Dfile.encoding=UTF-8" \
-            -Pkotlin.daemon.jvmargs="-Xmx3g" \
+            -Pkotlin.daemon.jvmargs="-Xmx6g" \
             --info \
             --stacktrace \
             --console=plain
