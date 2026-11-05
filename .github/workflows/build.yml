@@ -31,9 +31,18 @@ jobs:
       - name: Build debug APK
         run: |
           chmod +x gradlew
-          ./gradlew :app:assembleDebug --no-daemon --info --stacktrace --console=plain
+          ./gradlew :app:assembleDebug \
+            --no-daemon \
+            --max-workers=1 \
+            --no-parallel \
+            -Dorg.gradle.jvmargs="-Xmx2g -Dfile.encoding=UTF-8" \
+            -Pkotlin.daemon.jvmargs="-Xmx3g" \
+            --info \
+            --stacktrace \
+            --console=plain
 
       - uses: actions/upload-artifact@v4
         with:
           name: one-time-apk
           path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
