@@ -1,26 +1,38 @@
 name: build-apk
+
 on:
   push:
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+
       - name: Install Android SDK packages
         run: |
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0" "platform-tools" > /dev/null
           echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Check build memory
+        run: |
+          free -h
+          grep -E '^(org.gradle.jvmargs|kotlin.daemon.jvmargs|org.gradle.workers.max|org.gradle.parallel)=' gradle.properties || true
+
       - name: Build debug APK
         run: |
           chmod +x gradlew
-          ./gradlew :app:assembleDebug --no-daemon
+          ./gradlew :app:assembleDebug --no-daemon --info --stacktrace --console=plain
+
       - uses: actions/upload-artifact@v4
         with:
           name: one-time-apk
